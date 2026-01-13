@@ -3,16 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>buahta.makassar </title>
+    <title>buahta.makassar | Freshness in Every Bite</title>
     
     <link rel="icon" type="image/png" href="gambar/buahta.makassar.png">
+    <link rel="apple-touch-icon" href="gambar/buahta.makassar.png">
+    <meta property="og:image" content="gambar/buahta.makassar.png">
+    <meta property="og:title" content="buahta.makassar - Buah Segar Makassar">
+    <meta property="og:description" content="Suplier buah segar lokal & import terpercaya di Makassar.">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <link rel="stylesheet" href="style.css">
+
+    <style>
+        :root {
+            --primary: #27ae60;
+            --gradient: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            --accent: #f1c40f;
+            --glass: rgba(255, 255, 255, 0.85);
+        }
+
+        body { font-family: 'Poppins', sans-serif; background: #fdfdfd; color: #2d3436; overflow-x: hidden; }
+        h1, h2, h3, .navbar-brand { font-family: 'Fredoka', sans-serif; }
+
+        .bg-blob {
+            position: fixed; width: 400px; height: 400px; background: #d1f2eb;
+            filter: blur(80px); border-radius: 50%; z-index: -1; opacity: 0.5;
+            animation: float 20s infinite alternate;
+        }
+        @keyframes float { from { transform: translate(-10%, -10%); } to { transform: translate(100%, 50%); } }
+
+        .navbar {
+            background: var(--glass) !important;
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: 0.4s;
+        }
+        .nav-logo { height: 45px; margin-right: 10px; }
+
+        .hero-section {
+            padding: 120px 0 80px;
+            background: radial-gradient(circle at top right, #e8f5e9, transparent);
+        }
+
+        .fruit-card {
+            background: white; border-radius: 35px; border: none;
+            overflow: hidden; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            height: 100%;
+        }
+        .fruit-card:hover { transform: scale(1.03) rotate(1deg); }
+        
+        .img-container { height: 200px; position: relative; overflow: hidden; background: #f8f9fa; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .badge-promo {
+            position: absolute; top: 15px; left: 15px;
+            background: var(--accent); color: black; font-weight: 700;
+            padding: 5px 15px; border-radius: 50px; font-size: 12px;
+            z-index: 10;
+        }
+
+        .btn-order {
+            background: var(--gradient); color: white; border: none;
+            border-radius: 50px; padding: 10px 20px; font-weight: 600;
+            box-shadow: 0 8px 15px rgba(46, 204, 113, 0.2);
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-order:hover { transform: scale(1.05); color: white; }
+
+        .modal-content { border-radius: 40px; border: none; background: rgba(255,255,255,0.98); backdrop-filter: blur(10px); }
+        .form-control, .form-select { border-radius: 15px; padding: 12px 20px; background: #f8f9fa; border: 1px solid #eee; }
+
+        .map-box { border-radius: 40px; overflow: hidden; border: 8px solid white; box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+
+        #cart-bar {
+            position: fixed; bottom: 25px; left: 25px;
+            width: auto; max-width: 90%; background: white;
+            padding: 12px 20px; border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: none; z-index: 1000;
+            border-left: 5px solid var(--primary);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        #cart-bar:hover { transform: translateY(-5px); }
+
+        .live-price-box {
+            background: #f0fff4;
+            border: 2px dashed #27ae60;
+            border-radius: 20px;
+            padding: 15px;
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
 </head>
 <body>
+
     <div class="bg-blob"></div>
 
     <nav class="navbar navbar-expand-lg sticky-top">
@@ -28,13 +119,13 @@
         </div>
     </nav>
 
-    <section class="hero-section text-center text-lg-start">
+    <section class="hero-section">
         <div class="container">
-            <div class="row align-items-center">
+            <div class="row align-items-center text-center text-lg-start">
                 <div class="col-lg-6 animate__animated animate__fadeInLeft">
-                    <span class="badge px-3 py-2 rounded-pill mb-3" style="background: #e8f5e9; color: #27ae60;">✨ 100% Fresh & Premium</span>
-                    <h1 class="display-4 fw-bold mb-4">Toko Buah <span class="text-success">Segar Lokal & Import</span> Makassar.</h1>
-                    <p class="lead text-muted mb-5">Pesan Buah Dengan Mudah Secara Online, dan Lengkapi Hidup Sehatmu Dengan Keluarga Bersama Buahta Makassar.</p>
+                    <span class="badge bg-success-soft text-success px-3 py-2 rounded-pill mb-3" style="background: #e8f5e9;">✨ 100% Fresh & Premium</span>
+                    <h1 class="display-4 fw-bold mb-4">Kesegaran <span class="text-success">Buah Pilihan</span> Untuk Keluarga.</h1>
+                    <p class="lead text-muted mb-5">Suplier buah segar lokal & import terpercaya di Makassar. Pengiriman cepat, kualitas terjamin.</p>
                     <div class="d-flex gap-3 justify-content-center justify-content-lg-start">
                         <a href="#katalog" class="btn btn-order btn-lg px-4">Lihat Katalog</a>
                         <a href="#lokasi" class="btn btn-outline-success btn-lg rounded-pill px-4">Lokasi</a>
@@ -49,8 +140,233 @@
 
     <section id="katalog" class="container py-5">
         <h2 class="fw-bold mb-5 text-center">Menu Buah Hari Ini</h2>
-        <div id="product-container" class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4"></div>
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
+            
+            <div class="col">
+                <div class="fruit-card border border-success">
+                    <div class="badge-promo">Favorit</div>
+                    <div class="img-container"><img src="gambar/alpukat.jpg"></div>
+                    <div class="p-3 text-center">
+                        <h6 class="fw-bold mb-1">Alpukat</h6>
+                        <p class="text-muted small mb-3">Mentega Super</p>
+                        <button class="btn-order w-100" onclick="openOrder('Alpukat', ['Mentega Super'], [35000], 'berat')">Pilih</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="fruit-card">
+                    <div class="img-container"><img src="gambar/anggur.jpg"></div>
+                    <div class="p-3 text-center">
+                        <h6 class="fw-bold mb-1">Anggur</h6>
+                        <p class="text-muted small mb-3">Red Globe / Muscat</p>
+                        <button class="btn-order w-100" onclick="openOrder('Anggur', ['Red Globe', 'Shine Muscat'], [65000, 120000], 'berat')">Pilih</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="fruit-card">
+                    <div class="img-container"><img src="gambar/apel.jpeg"></div>
+                    <div class="p-3 text-center">
+                        <h6 class="fw-bold mb-1">Apel</h6>
+                        <p class="text-muted small mb-3">Fuji Premium</p>
+                        <button class="btn-order w-100" onclick="openOrder('Apel', ['Apel Fuji', 'Apel Malang'], [45000, 30000], 'berat')">Pilih</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="fruit-card">
+                    <div class="img-container"><img src="gambar/buahnaga.jpg"></div>
+                    <div class="p-3 text-center">
+                        <h6 class="fw-bold mb-1">Buah Naga</h6>
+                        <p class="text-muted small mb-3">Naga Merah Manis</p>
+                        <button class="btn-order w-100" onclick="openOrder('Buah Naga', ['Naga Merah'], [25000], 'berat')">Pilih</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="fruit-card">
+                    <div class="img-container"><img src="gambar/jeruk.jpeg"></div>
+                    <div class="p-3 text-center">
+                        <h6 class="fw-bold mb-1">Jeruk</h6>
+                        <p class="text-muted small mb-3">Mandarin / Sunkist</p>
+                        <button class="btn-order w-100" onclick="openOrder('Jeruk', ['Mandarin', 'Sunkist'], [35000, 45000], 'berat')">Pilih</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="fruit-card">
+                    <div class="img-container"><img src="gambar/mangga.jpeg"></div>
+                    <div class="p-3 text-center">
+                        <h6 class="fw-bold mb-1">Mangga</h6>
+                        <p class="text-muted small mb-3">Arumanis Matang</p>
+                        <button class="btn-order w-100" onclick="openOrder('Mangga', ['Arumanis Super'], [28000], 'berat')">Pilih</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="fruit-card">
+                    <div class="img-container"><img src="gambar/melon.jpg"></div>
+                    <div class="p-3 text-center">
+                        <h6 class="fw-bold mb-1">Melon</h6>
+                        <p class="text-muted small mb-3">Honey Globe</p>
+                        <button class="btn-order w-100" onclick="openOrder('Melon', ['Melon Madu'], [25000], 'unit')">Pilih</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="fruit-card">
+                    <div class="img-container"><img src="gambar/pir.jpg"></div>
+                    <div class="p-3 text-center">
+                        <h6 class="fw-bold mb-1">Buah Pir</h6>
+                        <p class="text-muted small mb-3">Pir Century</p>
+                        <button class="btn-order w-100" onclick="openOrder('Pir', ['Pir Century', 'Pir Packham'], [25000, 40000], 'berat')">Pilih</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="fruit-card">
+                    <div class="img-container"><img src="gambar/pisang.jpeg"></div>
+                    <div class="p-3 text-center">
+                        <h6 class="fw-bold mb-1">Pisang</h6>
+                        <p class="text-muted small mb-3">Sunpride / Raja</p>
+                        <button class="btn-order w-100" onclick="openOrder('Pisang', ['Sunpride', 'Pisang Raja'], [20000, 25000], 'unit')">Pilih</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="fruit-card">
+                    <div class="img-container"><img src="gambar/semangka.jpeg"></div>
+                    <div class="p-3 text-center">
+                        <h6 class="fw-bold mb-1">Semangka</h6>
+                        <p class="text-muted small mb-3">Tanpa Biji</p>
+                        <button class="btn-order w-100" onclick="openOrder('Semangka', ['Semangka Merah'], [10000], 'berat')">Pilih</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="fruit-card">
+                    <div class="img-container"><img src="gambar/kurma.jpg"></div>
+                    <div class="p-3 text-center">
+                        <h6 class="fw-bold mb-1">Kurma</h6>
+                        <p class="text-muted small mb-3">Sukari / Medjool</p>
+                        <button class="btn-order w-100" onclick="openOrder('Kurma', ['Sukari 500gr', 'Medjool 500gr'], [55000, 120000], 'unit')">Pilih</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="fruit-card border border-success">
+                    <div class="badge-promo">Favorit</div>
+                    <div class="img-container"><img src="gambar/saladbuah.jpg"></div>
+                    <div class="p-3 text-center">
+                        <h6 class="fw-bold mb-1">Salad Buah</h6>
+                        <p class="text-muted small mb-3">Creamy Cheese</p>
+                        <button class="btn-order w-100" onclick="openOrder('Salad Buah', ['Small Box', 'Large Box'], [15000, 35000], 'unit')">Pilih</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </section>
+
+    <div id="cart-bar" class="animate__animated animate__fadeInLeft" onclick="openCheckout()">
+        <div class="d-flex align-items-center gap-3">
+            <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
+                <i class="bi bi-cart-fill fs-5"></i>
+            </div>
+            <div>
+                <div class="small text-muted fw-bold" id="cart-count">0 Item Terpilih</div>
+                <div class="fw-bold text-success fs-5" id="cart-total-display">Rp 0</div>
+            </div>
+            <i class="bi bi-chevron-right text-muted ms-2"></i>
+        </div>
+    </div>
+
+    <div class="modal fade" id="orderModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg">
+                <div class="modal-header border-0 flex-column align-items-center">
+                    <div style="width: 50px; height: 5px; background: #eee; border-radius: 10px; margin-bottom: 20px;"></div>
+                    <h4 class="fw-bold text-success" id="m_name">Pilih Varian</h4>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <label class="small fw-bold mb-1">Varian Buah</label>
+                        <select id="m_variant" class="form-select" onchange="calculateLivePrice()"></select>
+                    </div>
+                    <div id="m_weight_box" class="mb-3">
+                        <label class="small fw-bold mb-1">Pilih Berat</label>
+                        <select id="m_weight" class="form-select" onchange="calculateLivePrice()">
+                            <option value="0.5">500 Gram (0.5 kg)</option>
+                            <option value="1" selected>1 Kilogram</option>
+                            <option value="2">2 Kilogram</option>
+                            <option value="3">3 Kilogram</option>
+                            <option value="5">5 Kilogram</option>
+                        </select>
+                    </div>
+                    <div id="m_qty_box" class="mb-3 d-none">
+                        <label class="small fw-bold mb-1">Jumlah</label>
+                        <input type="number" id="m_qty" class="form-control" value="1" min="1" oninput="calculateLivePrice()">
+                    </div>
+
+                    <div class="live-price-box">
+                        <div class="small text-muted mb-1">Total Harga:</div>
+                        <h3 class="fw-bold text-success mb-0" id="live-price-text">Rp 0</h3>
+                    </div>
+
+                    <button class="btn btn-order w-100 py-3 mt-4" onclick="addToCart()">Masukkan ke Keranjang</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="checkoutModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0 pb-0">
+                    <h4 class="fw-bold text-success">Detail Pesanan</h4>
+                </div>
+                <div class="modal-body p-4">
+                    <div id="checkout-list" class="mb-4 bg-light p-3 rounded-4 small border"></div>
+                    
+                    <div class="mb-3">
+                        <label class="small fw-bold mb-1">Nama Anda</label>
+                        <input type="text" id="c_name" class="form-control" placeholder="Nama lengkap..." required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="small fw-bold mb-1">Catatan Pesanan</label>
+                        <textarea id="c_note" class="form-control" placeholder="Contoh: Pilih yang matang..." rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="small fw-bold mb-1">Metode Pengiriman</label>
+                        <select id="c_shipping" class="form-select">
+                            <option>Ambil di Toko (BTP)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="text-center py-3 border-top mt-4">
+                        <span class="text-muted small">Total Pembayaran:</span>
+                        <h3 class="fw-bold text-success" id="final-total">Rp 0</h3>
+                    </div>
+                    
+                    <button class="btn btn-order w-100 py-3" onclick="sendToWA()">
+                        <i class="bi bi-whatsapp me-2"></i>Kirim ke WhatsApp
+                    </button>
+                    <button class="btn btn-link w-100 text-muted mt-2 btn-sm" onclick="clearCart()">Kosongkan Keranjang</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <section id="lokasi" class="container py-5 border-top">
         <div class="row g-4 align-items-center">
@@ -58,10 +374,12 @@
                 <h3 class="fw-bold text-success mb-3"><i class="bi bi-geo-alt-fill me-2"></i>Lokasi Toko</h3>
                 <div class="bg-light p-4 rounded-4 shadow-sm mb-3">
                     <p class="mb-2"><strong>Alamat:</strong> BTP Blok L No.10, Tamalanrea, Makassar</p>
-                    <p class="mb-0"><strong>Jam Buka:</strong> 08.00 - 22.00 WITA</p>
-                    <p class="mb-0"><strong>Pembayaran BCA:</strong> 3900188764 - ABD ARAS HAS</p>
+                    <p class="mb-2"><strong>WhatsApp:</strong> 0823-9812-4858</p>
+                    <p class="mb-0"><strong>Jam Buka:</strong> 08.00 - 21.00 WITA</p>
                 </div>
-                <a href="https://share.google/IQrDX6SPJFKj0n1Ov" target="_blank" class="btn btn-outline-success w-100 rounded-pill">Buka Maps</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=BTP+Blok+L+No.10+Tamalanrea+Makassar" target="_blank" class="btn btn-outline-success w-100 rounded-pill">
+                    <i class="bi bi-map me-2"></i>Buka di Google Maps
+                </a>
             </div>
             <div class="col-md-7">
                 <div class="map-box shadow-sm rounded-5 overflow-hidden border" style="height: 350px;">
@@ -79,70 +397,160 @@
         </div>
     </section>
 
+    <footer class="py-4 text-center text-muted border-top">
+        <small>© 2026 buahta.makassar. Kesegaran untuk Makassar ❤️</small>
+    </footer>
 
-    <div id="cart-bar" class="animate__animated animate__fadeInLeft" onclick="openCheckout()">
-        <div class="d-flex align-items-center gap-3">
-            <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
-                <i class="bi bi-cart-fill fs-5"></i>
-            </div>
-            <div>
-                <div class="small text-muted fw-bold" id="cart-count">0 Item</div>
-                <div class="fw-bold text-success fs-5" id="cart-total-display">Rp 0</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="orderModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content shadow-lg">
-                <div class="modal-body p-4">
-                    <h4 class="fw-bold text-success" id="m_name text-center">Pilih Varian</h4>
-                    <div class="mb-3">
-                        <label class="small fw-bold">Varian</label>
-                        <select id="m_variant" class="form-select" onchange="calculateLivePrice()"></select>
-                    </div>
-                    <div id="m_weight_box" class="mb-3">
-                        <label class="small fw-bold">Berat</label>
-                        <select id="m_weight" class="form-select" onchange="calculateLivePrice()">
-                            <option value="0.5">500 Gram</option>
-                            <option value="1" selected>1 Kilogram</option>
-                            <option value="2">2 Kilogram</option>
-                        </select>
-                    </div>
-                    <div id="m_qty_box" class="mb-3 d-none">
-                        <label class="small fw-bold">Jumlah</label>
-                        <input type="number" id="m_qty" class="form-control" value="1" min="1" oninput="calculateLivePrice()">
-                    </div>
-                    <div class="live-price-box p-3 text-center" style="background:#f0fff4; border:2px dashed #27ae60; border-radius:15px;">
-                        <h3 class="fw-bold text-success mb-0" id="live-price-text">Rp 0</h3>
-                    </div>
-                    <button class="btn btn-order w-100 py-3 mt-4" onclick="addToCart()">Masukkan ke Keranjang</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="checkoutModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body p-4">
-                    <h4 class="fw-bold text-success mb-4">Detail Pesanan</h4>
-                    <div id="checkout-list" class="mb-4 bg-light p-3 rounded-4 border"></div>
-                    <input type="text" id="c_name" class="form-control mb-2" placeholder="Nama Lengkap" required>
-                    <textarea id="c_note" class="form-control mb-3" placeholder="Catatan (opsional)"></textarea>
-                    <div class="text-center mb-4">
-                        <span class="text-muted small">Total Pembayaran:</span>
-                        <h3 class="fw-bold text-success" id="final-total">Rp 0</h3>
-                    </div>
-                    <button class="btn btn-order w-100 py-3" onclick="sendToWA()">Kirim ke WhatsApp</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-	
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="menu.js"></script>
-    <script src="script.js"></script>
+    <script>
+        const mOrder = new bootstrap.Modal(document.getElementById('orderModal'));
+        const mCheck = new bootstrap.Modal(document.getElementById('checkoutModal'));
+        let cart = [];
+        let tempItem = {};
+
+        function openOrder(name, variants, prices, type) {
+            tempItem = { name, variants, prices, type };
+            document.getElementById('m_name').innerText = name;
+            const select = document.getElementById('m_variant');
+            select.innerHTML = '';
+            
+            variants.forEach((v, i) => {
+                let opt = document.createElement('option');
+                opt.value = v;
+                opt.text = `${v} (Rp ${prices[i].toLocaleString()})`;
+                opt.dataset.price = prices[i];
+                select.appendChild(opt);
+            });
+
+            document.getElementById('m_weight_box').classList.toggle('d-none', type !== 'berat');
+            document.getElementById('m_qty_box').classList.toggle('d-none', type !== 'unit');
+            
+            document.getElementById('m_weight').value = "1";
+            document.getElementById('m_qty').value = "1";
+            
+            calculateLivePrice();
+            mOrder.show();
+        }
+
+        function calculateLivePrice() {
+            const vSelect = document.getElementById('m_variant');
+            if(!vSelect.selectedOptions.length) return;
+            
+            const price = parseInt(vSelect.selectedOptions[0].dataset.price);
+            let qty = 1;
+
+            if (tempItem.type === 'berat') {
+                qty = parseFloat(document.getElementById('m_weight').value);
+            } else {
+                qty = parseInt(document.getElementById('m_qty').value) || 1;
+            }
+
+            const total = price * qty;
+            document.getElementById('live-price-text').innerText = `Rp ${total.toLocaleString('id-ID')}`;
+        }
+
+        function addToCart() {
+            const vSelect = document.getElementById('m_variant');
+            const variant = vSelect.value;
+            const pricePerUnit = parseInt(vSelect.selectedOptions[0].dataset.price);
+            
+            let qty, label;
+            if (tempItem.type === 'berat') {
+                qty = parseFloat(document.getElementById('m_weight').value);
+                label = qty >= 1 ? qty + ' kg' : (qty * 1000) + ' gram';
+            } else {
+                qty = parseInt(document.getElementById('m_qty').value);
+                label = qty + ' unit';
+            }
+
+            const subtotal = pricePerUnit * qty;
+
+            cart.push({
+                desc: `${tempItem.name} (${variant})`,
+                label: label,
+                sub: subtotal
+            });
+
+            mOrder.hide();
+            renderCartBar();
+        }
+
+        function renderCartBar() {
+            const total = cart.reduce((s, i) => s + i.sub, 0);
+            const bar = document.getElementById('cart-bar');
+            if(cart.length > 0) {
+                bar.style.display = 'block';
+                document.getElementById('cart-count').innerText = `${cart.length} Jenis Pesanan`;
+                document.getElementById('cart-total-display').innerText = `Rp ${total.toLocaleString('id-ID')}`;
+            } else {
+                bar.style.display = 'none';
+            }
+        }
+
+        function openCheckout() {
+            let html = "";
+            let total = 0;
+            
+            if(cart.length === 0) {
+                html = '<div class="text-center py-3 text-muted">Keranjang Anda kosong</div>';
+            } else {
+                cart.forEach((item, index) => {
+                    html += `
+                    <div class="d-flex justify-content-between align-items-center mb-2 border-bottom pb-2">
+                        <div style="flex: 1;">
+                            <div class="fw-bold text-dark" style="font-size: 0.9rem;">${item.desc}</div>
+                            <div class="text-muted" style="font-size: 0.8rem;">${item.label} - Rp ${item.sub.toLocaleString()}</div>
+                        </div>
+                        <button class="btn btn-sm text-danger border-0 ms-2" onclick="removeItem(${index})">
+                            <i class="bi bi-trash fs-5"></i>
+                        </button>
+                    </div>`;
+                    total += item.sub;
+                });
+            }
+            
+            document.getElementById('checkout-list').innerHTML = html;
+            document.getElementById('final-total').innerText = `Rp ${total.toLocaleString('id-ID')}`;
+            mCheck.show();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            renderCartBar();
+            if(cart.length > 0) {
+                openCheckout(); 
+            } else {
+                mCheck.hide();
+            }
+        }
+
+        function clearCart() {
+            if(confirm("Kosongkan keranjang?")) {
+                cart = [];
+                renderCartBar();
+                mCheck.hide();
+            }
+        }
+
+        function sendToWA() {
+            const name = document.getElementById('c_name').value;
+            if(!name) return alert("Mohon isi nama Anda");
+            
+            const note = document.getElementById('c_note').value || "-";
+            const ship = document.getElementById('c_shipping').value;
+            let list = "";
+            let grand = 0;
+            
+            cart.forEach(i => {
+                // MENAMBAHKAN FORMAT BOLD (*) DI SINI
+                list += `- *${i.desc}* (${i.label}) = Rp ${i.sub.toLocaleString()}%0A`;
+                grand += i.sub;
+            });
+
+            // MENAMBAHKAN FORMAT BOLD (*) PADA JUDUL, NAMA, DAN TOTAL
+            const text = `*PESANAN BARU MASUK - BUAHTA.MAKASSAR*%0A%0A*Nama:* ${name}%0A*Pesanan:*%0A${list}%0A*Catatan:* ${note}%0A*Pengambilan:* ${ship}%0A*Total:* *Rp ${grand.toLocaleString()}*`;
+            window.open(`https://wa.me/6282398124858?text=${text}`);
+        }
+    </script>
 </body>
 </html>
