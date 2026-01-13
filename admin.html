@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Buahta Makassar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* SINKRONISASI VARIABLE CSS DARI INDEX */
+        :root {
+            --primary: #27ae60;
+            --gradient: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            --accent: #f1c40f;
+            --glass: rgba(255, 255, 255, 0.85);
+        }
+
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: #fdfdfd; 
+            color: #2d3436; 
+            overflow-x: hidden; 
+        }
+
+        h1, h2, h5, .navbar-brand { font-family: 'Fredoka', sans-serif; }
+
+        /* Background Blob seperti di Index */
+        .bg-blob {
+            position: fixed; width: 300px; height: 300px; background: #d1f2eb;
+            filter: blur(80px); border-radius: 50%; z-index: -1; opacity: 0.5;
+            top: -50px; left: -50px;
+        }
+
+        /* Navbar Sinkron */
+        .navbar { 
+            background: var(--glass) !important; 
+            backdrop-filter: blur(15px); 
+            border-bottom: 1px solid rgba(0,0,0,0.05); 
+        }
+        .admin-logo { height: 40px; object-fit: contain; }
+
+        /* Card Sinkron dengan .fruit-card */
+        .admin-card {
+            background: white; border-radius: 25px; border: none; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            padding: 25px;
+        }
+
+        /* Form Styling */
+        .form-control, .form-select {
+            border-radius: 15px; border: 1px solid #eee; padding: 12px;
+            font-size: 0.9rem; background: #f8f9fa;
+        }
+        .form-control:focus { border-color: var(--primary); box-shadow: none; background: white; }
+
+        /* Tombol Sinkron dengan .btn-order */
+        .btn-save { 
+            background: var(--gradient); color: white; border: none; 
+            border-radius: 50px; padding: 12px; font-weight: 600; transition: 0.3s;
+        }
+        .btn-save:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3); color: white; }
+
+        /* Tabel & Preview */
+        .product-thumb { width: 50px; height: 50px; object-fit: cover; border-radius: 12px; }
+        .preview-container { 
+            width: 100%; height: 180px; border-radius: 20px; overflow: hidden; 
+            background: #f8f9fa; border: 2px dashed #ddd; display: none; margin-bottom: 15px;
+        }
+        .preview-container img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .badge-fav { background: var(--accent); color: #000; font-size: 10px; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="bg-blob"></div>
+
+    <nav class="navbar navbar-light sticky-top py-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+                <img src="gambar/buahta.makassar.png" alt="Logo" class="admin-logo" onerror="this.src='https://placehold.co/100x100?text=LOGO'">
+                <span class="text-success fw-bold d-none d-sm-inline">Admin Buahta.makassar</span>
+            </a>
+            <a href="index.html" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold">
+                <i class="bi bi-shop me-1"></i> Ke Toko
+            </a>
+        </div>
+    </nav>
+
+    <div class="container py-4">
+        <div class="row g-4">
+            
+            <div class="col-lg-4">
+                <div class="admin-card">
+                    <h5 class="fw-bold mb-4 text-success" id="form-title"><i class="bi bi-plus-circle-fill me-2"></i>Tambah Produk</h5>
+                    <form id="productForm">
+                        <input type="hidden" id="editIndex" value="-1">
+                        
+                        <div class="mb-3">
+                            <div id="boxPreview" class="preview-container">
+                                <img id="imgTampil" src="">
+                            </div>
+                            <label class="btn btn-light w-100 rounded-pill border py-2 small fw-bold">
+                                <i class="bi bi-camera-fill me-2 text-success"></i>Upload Foto
+                                <input type="file" id="p_file" accept="image/*" hidden onchange="handleFoto()">
+                            </label>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="small fw-bold mb-1">Nama Buah</label>
+                            <input type="text" id="p_nama" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="small fw-bold mb-1">Sub Keterangan</label>
+                            <input type="text" id="p_sub" class="form-control" required>
+                        </div>
+
+                        <div class="row g-2 mb-3">
+                            <div class="col-6">
+                                <label class="small fw-bold mb-1">Tipe</label>
+                                <select id="p_tipe" class="form-select">
+                                    <option value="berat">Berat (Kg)</option>
+                                    <option value="unit">Unit (Pcs)</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label class="small fw-bold mb-1">Favorit?</label>
+                                <select id="p_fav" class="form-select">
+                                    <option value="false">Tidak</option>
+                                    <option value="true">Ya</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="small fw-bold mb-1">Varian & Harga (Varian:Harga)</label>
+                            <textarea id="p_data" class="form-control" rows="3" placeholder="Contoh: Super:35000, Biasa:25000" required></textarea>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn-save" id="btn-submit">Simpan Menu</button>
+                            <button type="button" class="btn btn-light rounded-pill d-none" id="btn-cancel" onclick="resetForm()">Batal</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="admin-card">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-bold mb-0">Menu Saat Ini</h5>
+                        <span class="badge bg-light text-dark border rounded-pill px-3" id="count-text">0 Produk</span>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead class="text-muted small">
+                                <tr>
+                                    <th>PRODUK</th>
+                                    <th>INFO</th>
+                                    <th class="text-end">AKSI</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-table" style="font-size: 0.9rem;">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let daftarBuah = JSON.parse(localStorage.getItem('produk_buah')) || [];
+        let base64Foto = "";
+
+        function handleFoto() {
+            const file = document.getElementById('p_file').files[0];
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                base64Foto = reader.result;
+                document.getElementById('imgTampil').src = reader.result;
+                document.getElementById('boxPreview').style.display = 'block';
+            }
+            if(file) reader.readAsDataURL(file);
+        }
+
+        function renderAdmin() {
+            const tbody = document.getElementById('admin-table');
+            document.getElementById('count-text').innerText = `${daftarBuah.length} Produk`;
+            
+            tbody.innerHTML = daftarBuah.map((b, i) => `
+                <tr>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <img src="${b.foto}" class="product-thumb me-3">
+                            <div>
+                                <div class="fw-bold mb-0">${b.nama} ${b.fav ? '<span class="badge badge-fav">⭐</span>' : ''}</div>
+                                <div class="text-muted small">${b.sub}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="badge bg-light text-dark border fw-normal">${b.varian.length} Varian</span></td>
+                    <td class="text-end">
+                        <button class="btn btn-sm btn-light border rounded-pill mx-1" onclick="editData(${i})"><i class="bi bi-pencil text-primary"></i></button>
+                        <button class="btn btn-sm btn-light border rounded-pill mx-1" onclick="hapusData(${i})"><i class="bi bi-trash text-danger"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+            localStorage.setItem('produk_buah', JSON.stringify(daftarBuah));
+        }
+
+        document.getElementById('productForm').onsubmit = function(e) {
+            e.preventDefault();
+            const index = parseInt(document.getElementById('editIndex').value);
+            const raw = document.getElementById('p_data').value.split(',');
+            let vars = [], hrg = [];
+            
+            raw.forEach(item => {
+                const p = item.split(':');
+                if(p.length === 2) {
+                    vars.push(p[0].trim());
+                    hrg.push(parseInt(p[1].trim()));
+                }
+            });
+
+            const data = {
+                nama: document.getElementById('p_nama').value,
+                sub: document.getElementById('p_sub').value,
+                foto: base64Foto || (index >= 0 ? daftarBuah[index].foto : 'https://placehold.co/400x300?text=Buah'),
+                tipe: document.getElementById('p_tipe').value,
+                fav: document.getElementById('p_fav').value === 'true',
+                varian: vars,
+                harga: hrg
+            };
+
+            if(index === -1) daftarBuah.push(data);
+            else daftarBuah[index] = data;
+
+            renderAdmin();
+            resetForm();
+            alert("Data Berhasil Disimpan!");
+        }
+
+        function editData(i) {
+            const b = daftarBuah[i];
+            document.getElementById('editIndex').value = i;
+            document.getElementById('p_nama').value = b.nama;
+            document.getElementById('p_sub').value = b.sub;
+            document.getElementById('p_tipe').value = b.tipe;
+            document.getElementById('p_fav').value = b.fav.toString();
+            document.getElementById('p_data').value = b.varian.map((v, idx) => `${v}:${b.harga[idx]}`).join(', ');
+            
+            document.getElementById('imgTampil').src = b.foto;
+            document.getElementById('boxPreview').style.display = 'block';
+            base64Foto = b.foto;
+
+            document.getElementById('form-title').innerHTML = '<i class="bi bi-pencil-fill me-2"></i>Edit Produk';
+            document.getElementById('btn-submit').innerText = "Update Produk";
+            document.getElementById('btn-cancel').classList.remove('d-none');
+            window.scrollTo(0,0);
+        }
+
+        function hapusData(i) {
+            if(confirm('Hapus ' + daftarBuah[i].nama + '?')) {
+                daftarBuah.splice(i, 1);
+                renderAdmin();
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('productForm').reset();
+            document.getElementById('editIndex').value = "-1";
+            document.getElementById('boxPreview').style.display = 'none';
+            document.getElementById('form-title').innerHTML = '<i class="bi bi-plus-circle-fill me-2"></i>Tambah Produk';
+            document.getElementById('btn-submit').innerText = "Simpan Menu";
+            document.getElementById('btn-cancel').classList.add('d-none');
+            base64Foto = "";
+        }
+
+        renderAdmin();
+    </script>
+</body>
+</html>
